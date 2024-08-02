@@ -43,4 +43,30 @@ async function calculateFloor() {
 
 calculateFloor()
 
+// --------------------------- P2--------------------------
 
+async function positionOfChar() {
+    let floor = 0
+    let position = 0
+    try {
+        let input = await returnInput()
+        input = input.split("")
+        for (let i = 0; i < input.length; i++) {
+            if(input[i] === '(') {
+                floor += 1
+            } else if (input[i] === ')') {
+                floor -= 1
+            }
+            // console.log("Floor", floor, "position", i);
+            if (floor === -1) {
+                position = i + 1 // cause the first character starts from 1 and here i starts from 0
+                break
+            }
+        }
+        console.log("Position", position);
+    } catch (error) {
+        console.log(error)
+    }
+}
+
+positionOfChar()
