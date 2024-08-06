@@ -9,11 +9,15 @@ fs.readFile("input.txt", "utf8").then((data) => {
       splitedArr = splitedArr.map((val) => Number(val));
       return splitedArr;
     });
-  let total = 0;
+  let wrap = 0;
   data.forEach((val) => {
-    total = total + wrapPaper(...val);
+    wrap = wrap + wrapPaper(...val);
   });
-  console.log("Total:", total);
+  let ribbon = 0;
+  data.forEach((val) => {
+    ribbon = ribbon + totalRibbon(...val);
+  });
+  console.log("Wrap:", wrap, "\n Ribbon:", ribbon);
 });
 
 function wrapPaper(w, l, h) {
@@ -22,19 +26,11 @@ function wrapPaper(w, l, h) {
   return area + smallestArea;
 }
 
-// const fs = require('fs');
-// const INPUT = fs.readFileSync('./input.txt', 'utf-8').split('\n');
-// const result = INPUT.reduce((total, _lwh) => {
-//   const lwh = _lwh.split('x');
-//   const length = lwh[0];
-//   const width = lwh[1];
-//   const height = lwh[2];
+function totalRibbon(w, l, h) {
+  const sides = [w, l, h];
+  sides.sort((a, b) => a - b);
+  const ribbonToWrap = 2 * (sides[0] + sides[1]);
 
-//   return total
-//     + (2 * length * width)
-//     + (2 * width * height)
-//     + (2 * height * length)
-//     + Math.min(length * width, width * height, height * length);
-// }, 0);
-
-// console.log(result);
+  const ribbonForBow = w * l * h;
+  return ribbonForBow + ribbonToWrap;
+}
